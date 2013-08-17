@@ -1,4 +1,4 @@
-import 'package:range/range.dart';
+import '../lib/range.dart';
 import 'package:unittest/unittest.dart';
 
 main() {
@@ -7,12 +7,12 @@ main() {
     for (int v in range(0, 10)) {
       sum += v;
     }
-    expect(sum, 0+1+2+3+4+5+6+7+8+9+10);
+    expect(sum, 0+1+2+3+4+5+6+7+8+9);
   });
 
   test("indices", () {
     var str = "abc";
-    expect(range(0, str.length - 1), indices(str));
+    expect(range(0, str.length), indices(str));
   });
 
   test("explicit iterator", () {
@@ -26,14 +26,14 @@ main() {
       while (it.moveNext()) {
         sum += it.current;
       }
-      expect(sum, 0+1+2+3+4+5+6+7+8+9+10);
+      expect(sum, 0+1+2+3+4+5+6+7+8+9);
     }
   });
 
   test("forEach", () {
     int sum = 0;
     range(0, 10).forEach((e) => sum += e);
-    expect(sum, 0+1+2+3+4+5+6+7+8+9+10);
+    expect(sum, 0+1+2+3+4+5+6+7+8+9);
   });
 
   test("some", () {
@@ -58,10 +58,10 @@ main() {
 
   test("List.from", () {
     List<int> list = new List<int>.from(range(0, 5));
-    expect(list.length, 6);
+    expect(list.length, 5);
     int sum = 0;
     list.forEach((e) => sum += e);
-    expect(sum, 0+1+2+3+4+5);
+    expect(sum, 0+1+2+3+4);
   });
 
   test("toString", () {
@@ -71,11 +71,11 @@ main() {
   });
 
   test("simple ranges", () {
-    Expect_iterableEquals([0, 1, 2, 3, 4, 5], range(0, 5));
-    Expect_iterableEquals([1, 2, 3, 4, 5], range(1, 5));
-    Expect_iterableEquals([-1, 0, 1, 2, 3, 4, 5], range(-1, 5));
-    Expect_iterableEquals([0, 2, 4, 6, 8, 10], range(0, 10, 2));
-    Expect_iterableEquals([0, -2, -4, -6, -8, -10], range(0, -10, -2));
+    Expect_iterableEquals([0, 1, 2, 3, 4], range(0, 5));
+    Expect_iterableEquals([1, 2, 3, 4], range(1, 5));
+    Expect_iterableEquals([-1, 0, 1, 2, 3, 4], range(-1, 5));
+    Expect_iterableEquals([0, 2, 4, 6, 8], range(0, 10, 2));
+    Expect_iterableEquals([0, -2, -4, -6, -8], range(0, -10, -2));
     Expect_iterableEquals([10, 8, 6, 4, 2, 0], range(10, 0, -2));
     Expect_iterableEquals([-10, -8, -6, -4, -2, 0], range(-10, 0, 2));
     Expect_iterableEquals([-5, -2, 1, 4], range(-5, 5, 3));
@@ -97,13 +97,13 @@ main() {
   });
 
   test("length", () {
-    expect(6, range(0, 5).length);
-    expect(5, range(1, 5).length);
-    expect(7, range(-1, 5).length);
-    expect(6, range(0, 10, 2).length);
-    expect(6, range(0, -10, -2).length);
-    expect(6, range(10, 0, -2).length);
-    expect(6, range(-10, 0, 2).length);
+    expect(5, range(0, 5).length);
+    expect(4, range(1, 5).length);
+    expect(6, range(-1, 5).length);
+    expect(5, range(0, 10, 2).length);
+    expect(5, range(0, -10, -2).length);
+    expect(5, range(10, 0, -2).length);
+    expect(5, range(-10, 0, 2).length);
     expect(4, range(-5, 5, 3).length);
     expect(4, range(5, -5, -3).length);
 
@@ -116,8 +116,8 @@ main() {
     expect(0, range(-2, -1, -1).length);
 
     // ranges of length 1
-    expect(1, range(0, 0).length);
-    expect(1, range(-3, -3).length);
+    expect(0, range(0, 0).length);
+    expect(0, range(-3, -3).length);
     expect(1, range(1, 10, 10).length);
     expect(1, range(-1, -10, -10).length);
 
@@ -160,6 +160,15 @@ main() {
       expect(e, isArgumentError);
     }
     expect(isExceptionThrown, true);
+  });
+  test("single value", () {
+    expect(range(5)==range(0,5), true);
+  });
+  test("from documentation", () {
+    Expect_iterableEquals([0, 1, 2], range(3));
+    Expect_iterableEquals([0, 1, 2, 3, 4], range(5));
+    Expect_iterableEquals([0, 2, 4, 6], range(0, 8, 2));
+    Expect_iterableEquals([0, 3, 6, 9], range(0, 10, 3));
   });
   
 

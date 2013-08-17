@@ -1,26 +1,25 @@
 library range;
 import "dart:collection";
 class Range extends Object with IterableMixin<int> {
-  Range(int this.start, int this.stop, [int this.step = 1]) {
+  Range(int this.start, [int this.stop, int this.step = 1]) {
+    if (stop == null ) { // reverse stop and start making start 0
+      stop = start;
+      start = 0;
+    }
     if (step == 0) {
       throw new ArgumentError("step must not be 0");
     }
   }
 
   Iterator<int> get iterator {
-    if (step == 1) {
-      return new RangeIncrementingIterator(start, stop);
-    }
-    else {
       return new RangeIterator(start, stop, step);
-    }
   }
 
   int get length {
     if ((step > 0 && start > stop) || (step < 0 && start < stop)) {
       return 0;
     }
-    return (stop - start + step) ~/ step;
+    return ((stop - start) / step).ceil();
   }
 
   bool get isEmpty => length == 0;
@@ -77,8 +76,8 @@ class Range extends Object with IterableMixin<int> {
             step == other.step);
   }
 
-  final int start;
-  final int stop;
+  int start;
+  int stop;
   final int step;
 }
 
@@ -96,38 +95,12 @@ class RangeIterator implements Iterator<int> {
     return _pos;
   }
   bool moveNext() {
-    if (_step > 0  ? _pos +_step> _stop : _pos+_step < _stop) {
+    if (_step > 0  ? _pos +_step> _stop-1 : _pos+_step < _stop+1) {
       return false;
     }
     _pos += _step;
     return true;
   }
 }
-
-class RangeIncrementingIterator implements Iterator<int> {
-  int _pos;
-  final int _stop;
-  RangeIncrementingIterator(int pos, stop) 
-    : _pos = pos-1,
-    _stop = stop;
-  
-  int get current => _pos;
-  bool moveNext() {
-    if (_pos >= _stop) {
-      return false;
-    }
-    _pos++;
-    return true;
-    //_pos <= _stop;              
-  }
- /* int next() {
-    if (!hasNext()) {
-      throw new StateError("No more elements");
-    }
-    return _pos++;
-  }*/
-
-}
-
-Range range(int start, int stop, [int step = 1]) => new Range(start, stop, step);
-Range indices(lengthable) => new Range(0, lengthable.length - 1);
+Range range(int start_inclusive, [int stop_exclusive, int step = 1]) => new Range(start_inclusive, stop_exclusive, step);
+Range indices(lengthable) => new Range(0, lengthable.length);
