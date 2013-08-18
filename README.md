@@ -1,8 +1,7 @@
-Usage:
-
+Compatibility with the latest Dart release:
 [![Build Status](https://drone.io/github.com/ilyakharlamov/dart-range/status.png)](https://drone.io/github.com/ilyakharlamov/dart-range/latest)
 
-
+Usage:
 ```dart
 import "package:range/range.dart";
 
