@@ -1,5 +1,8 @@
 Usage:
 
+[![Build Status](https://drone.io/github.com/ilyakharlamov/dart-range/status.png)](https://drone.io/github.com/ilyakharlamov/dart-range/latest)
+
+
 ```dart
 import "package:range/range.dart";
 
