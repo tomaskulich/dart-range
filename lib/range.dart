@@ -29,7 +29,7 @@ class Range extends Object with IterableMixin<int> {
       "Range($start, $stop)" : "Range($start, $stop, $step)";
   }
 
-  bool every(bool f(int)) {
+  bool every(bool f(int e)) {
     for (int e in this) {
       if (f(e) == false) {
         return false;
@@ -38,7 +38,7 @@ class Range extends Object with IterableMixin<int> {
     return true;
   }
 
-  bool some(bool f(int)) {
+  bool some(bool f(int e)) {
     for (int e in this) {
       if (f(e)) {
         return true;
@@ -47,26 +47,18 @@ class Range extends Object with IterableMixin<int> {
     return false;
   }
 
-  void forEach(void f(int)) {
+  void forEach(void f(int e)) {
     for (int e in this) {
       f(e);
     }
   }
 
-  List<int> filter(bool f(int)) {
+  List<int> filter(bool f(int e)) {
     var l = new List<int>();
     for (int e in this) {
       if (f(e)) {
         l.add(e);
       }
-    }
-    return l;
-  }
-
-  List map(f(int)) {
-    var l = new List();
-    for (int e in this) {
-      l.add(f(e));
     }
     return l;
   }
