@@ -135,6 +135,16 @@ main() {
     }
   });
 
+  test("hashCode", () {
+    expect(range(1, 2, 3).hashCode, range(1, 2, 3).hashCode);
+    expect(range(1, 2).hashCode, range(1, 2).hashCode);
+    expect(range(1).hashCode, range(1).hashCode);
+    expect(range(1, 2, 3).hashCode, isNot(equals(range(1, 0, 3).hashCode)));
+    expect(range(1, 2, 3).hashCode, isNot(equals(range(0, 2, 3).hashCode)));
+    expect(range(1, 2, 3).hashCode, isNot(equals(range(1, 2).hashCode)));
+    expect(range(1, 1).hashCode, isNot(equals(range(2, 2).hashCode)));
+  });
+
   test("operator ==", () {
     expect(range(1, 2, 3)==range(1, 2, 3), true);
     expect(range(1, 2, 3)==range(1, 0, 3), false);
