@@ -24,6 +24,14 @@ class Range extends Object with IterableMixin<int> {
 
   bool get isEmpty => length == 0;
 
+  int get hashCode {
+    int result = 17;
+    result = 37 * result + start.hashCode;
+    result = 37 * result + stop.hashCode;
+    result = 37 * result + step.hashCode;
+    return result;
+  }
+
   String toString() {
     return step == 1 ?
       "Range($start, $stop)" : "Range($start, $stop, $step)";
